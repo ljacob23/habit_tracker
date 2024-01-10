@@ -1,5 +1,6 @@
 # Habit Tracker
 This web application will be used to help me create a tracker for all my goals in 2024.
+:-
 One of my goals for 2024 was to complete 75 hard. It is this 75 day physical and mental challenge with all these rules you have to follow. 
 * no alcohol
 * 2 45 minute workouts every day (one has to be inside, one has to be outside)
