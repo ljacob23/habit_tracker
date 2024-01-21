@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
+import Modal from './Modal';
 
 function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [habitData, setHabitData] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
 
     //get the year
     //then increase to the next month
@@ -31,6 +35,20 @@ function App() {
       }
       return true;
     }
+
+    const handleDayClick = (dayNumber) => {
+      const clickedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
+      
+      setSelectedDate(clickedDate);
+      setModalOpen(true);
+    };
+
+    const closeModal = () => {
+      setSelectedDate(null);
+      setModalOpen(false);
+    };
+
+    //return statement with html
     return (
       <html lang="en">
       <head>
@@ -57,7 +75,12 @@ function App() {
                     const sameDay = isSameDay(new Date(), new Date(currentDate.getFullYear(), currentDate.getMonth(), index + 1));
 
                     return(
-                      <div key={dayNumber} className={`day ${sameDay ? 'current-day' : ''}`}>{dayNumber}
+                      //
+                      <div key={dayNumber} 
+                      className={`day ${sameDay ? 'current-day' : ''}`}
+                      onClick={() => handleDayClick(dayNumber)}>
+                        {dayNumber}
+
                       <div className = "circle"></div>
                       <div className = "date"></div>
                       </div>
@@ -66,6 +89,13 @@ function App() {
                   )}
                 </div>
             </div>
+            <Modal
+              isOpen={modalOpen}
+              onClose={closeModal}
+              date={selectedDate}
+              habitData={habitData}
+              setHabitData={setHabitData}
+            />
         </div>
         </html>
     )
