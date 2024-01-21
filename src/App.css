@@ -42,7 +42,7 @@
   justify-content: center;
 }
 
-button{
+.arrows{
   background-color: white;
   border-radius: 5px;
   color: darkgray;

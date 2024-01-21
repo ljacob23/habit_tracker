@@ -58,14 +58,14 @@ function App() {
       </head>
         <div className="app">
           <div className="header">
-                    <button onClick={prevMonth}>&lt;</button>
+                    <button className = "arrows" onClick={prevMonth}>&lt;</button>
                     <h1>
                         {new Date(currentDate).toLocaleString('default', {
                             month: 'long',
                             year: 'numeric',
                         })}
                     </h1>
-                    <button onClick={nextMonth}>&gt;</button>
+                    <button className = "arrows" onClick={nextMonth}>&gt;</button>
                 </div>
             <div className="calendar">
                 <div className="days">
