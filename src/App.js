@@ -7,6 +7,7 @@ function App() {
   const [habitData, setHabitData] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     //get the year
     //then increase to the next month

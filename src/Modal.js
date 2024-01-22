@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './Modal.css';
 
 const Modal = ({ isOpen, onClose, date, habitData, setHabitData }) => {
-    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const checkBox = (habit) => {
@@ -50,26 +50,41 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData }) => {
         onClose();
     };
 
+    const isSameDay = (date1, date2) => {
+        if(!date1 || !date2){
+            return false;
+        }
+        if(date1.getFullYear() !== date2.getFullYear()){
+          return false;
+        } else if(date1.getMonth() !== date2.getMonth()){
+          return false;
+        } else if(date1.getDate() !== date2.getDate()){
+          return false;
+        }
+        return true;
+    };
 
     const week = getCurrentWeek();
-    console.log(week);
+
 
     return (
         <div className="modal-overlay">
           <div className="modal">
-            <button onClick={closeModal}>&laquo; Back</button>
-            <h2>{new Date().toLocaleString('default', {month : 'short'})} {new Date().getFullYear()} </h2>
+            <button onClick={closeModal} className = "backButton">&laquo;</button>
+
+                <h2>
+                    {date.toLocaleString('default', { month: 'short' })}{' '}
+                    {date.getFullYear()}
+                </h2>
             <div className = "week-header">
                 {week.map((day, index) => (
-                    <div 
-                    key={index} 
-                    className = "day"
-                    onClick={() => handleDayClick(day)}>
-                        <div className = "individual">
-                        <p className="dayOfWeek">{day.toLocaleDateString('en-US', {weekday: 'short' })}</p>
-                        <p className="date">{day.getDate()}</p>
-                        </div>
-                    </div>
+                         <div key={index} 
+                         className = {`day ${isSameDay(day, date) ? 'selected-day' : 'individual'}`}
+                         onClick={() => handleDayClick(day)}>
+                         <p className="dayOfWeek">{day.toLocaleDateString('en-US', {weekday: 'short' })}</p>
+                         <p className="date">{day.getDate()}</p>
+                         </div>
+                
                 ))}
             </div>
             <div className = "habits">

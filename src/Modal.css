@@ -5,6 +5,9 @@
     position: fixed;
     display: flex;
 }
+h2 {
+    margin-left: 20px;
+}
 .modal-overlay .day{
     border-top: none;
 }
@@ -67,6 +70,7 @@ body, html {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 8%;
 }
+
 .dayOfWeek{
     margin-bottom: -0px;
 }
@@ -74,4 +78,32 @@ body, html {
     margin-top: -2px;
     color: darkgrey;
     font-size: 1.5rem;
+}
+
+.individual:hover {
+    background-color: lightgray;
+    color:white;
+}
+
+.individual:hover .date {
+    color: white;
+}
+
+.backButton{
+    color: darkgrey;
+    background-color: white;
+    border: none;
+    font-size: 1.3rem;
+}
+
+.selected-day{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 95px;
+    width: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8%;
+    background-color: lightgray;
+    color: white;
 }
