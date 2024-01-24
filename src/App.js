@@ -44,6 +44,15 @@ function App() {
       setModalOpen(true);
     };
 
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+
+    //using 0 because that is the index of sunday
+    const columnOffset = firstDay - 0;
+
+    const skipDays = Array.from({ length: columnOffset }, (_, index) => (
+      <div key = {`empty-${index}`} ></div>
+    ));
+
     const closeModal = () => {
       setSelectedDate(null);
       setModalOpen(false);
@@ -69,7 +78,15 @@ function App() {
                     <button className = "arrows" onClick={nextMonth}>&gt;</button>
                 </div>
             <div className="calendar">
+              {/* <div className="daysOfWeek">
+                {weekdays.map(day => (
+                  <div key={day} className="dayOfWeek">
+                    {day}
+                  </div>
+                ))}
+              </div> */}
                 <div className="days">
+                  {skipDays}
                   {Array.from({ length: daysInMonth }, (_, index) => {
                     //index is the day in the month but zero-indexed so add 1
                     const dayNumber = index + 1;
