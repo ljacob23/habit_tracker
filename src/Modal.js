@@ -1,36 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Modal.css';
 
 
-//CREATE NEW MODAL THAT DOES NOTHING EXCEPT CALL THIS MODAL BACK
-//I'M A GENIUS
-const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
+const Modal = ({ isOpen, onClose, date, habitData, setHabitData, checkBox}) => {
+    const [modalContent, setModalContent] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const checkBox = (habit) => {
-        setHabitData((prevData) => {
-            const dateISO = date ? date.toISOString() : '';
-            const currentData = prevData[dateISO] || {};
-            const updatedData = {
-                ...prevData,
-                [dateISO]: {
-                    ...currentData,
-                    [habit]: !currentData[habit],
-                },
-            }
-            
-           return updatedData;
-        });
-    };
+    const [selectedDate, setSelectedDate] = useState(date);
     
+    // useEffect(() => {
+    //     const generateModalContent = () => {
+    //         const content = (
+    //             <div>
+    //                 <p>Selected Date: {selectedDate && selectedDate.toDateString()}</p>
+    //                 <p>Habit Data: {JSON.stringify(habitData)}</p> 
+    //             </div>
+    //         );
+    //         setModalContent(content);
+    //     };
+    //     generateModalContent();
+    // }, [selectedDate, habitData]);
+
     if(!isOpen){
         return null;
-    }
+    };
 
-    //create this variable so the dataCheck can read the date
-    const dateISO = date.toISOString();
-    //this will default to an empty object if dateISO is undefined
-    const dateHabitData = habitData[dateISO] || {}; 
+    
+
+
+    const dateHabitData = habitData;
 
 
     const getCurrentWeek = () => {
@@ -43,10 +40,6 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
         return week;
     }; 
 
-    // const handleDayClick = (clickedDate) => {
-    //     setSelectedDate(clickedDate);
-    //     setModalOpen(true);
-    // };
 
     const openNewModal = () => {
         // Open a new modal with the selected date
@@ -57,7 +50,6 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
         const clickedDate = new Date(dayNumber.getFullYear(), dayNumber.getMonth(), dayNumber.getDate());
         console.log(clickedDate);
 
-        // setSelectedDate(clickedDate);
        setSelectedDate(clickedDate);
        
       };
@@ -104,12 +96,13 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
                 ))}
             </div>
             <div className = "habits">
+                {modalContent}
             <label className = "task">
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit1 || false}
-                onChange={() => checkBox('habit1')}
+                checked={dateHabitData[0] === 1}
+                onChange={() => checkBox(0)}
               />
               No Alcohol
             </label>
@@ -117,8 +110,10 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit2 || false}
-                onChange={() => checkBox('habit2')}
+                checked={dateHabitData[1] === 1}
+                onChange={() => {
+                    console.log(dateHabitData)
+                    checkBox(1)}}
               />
               Indoor 45 minute workout
             </label>
@@ -126,8 +121,8 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit3 || false}
-                onChange={() => checkBox('habit3')}
+                checked={dateHabitData[2] === 1}
+                onChange={() => checkBox(2)}
               />
               Outdoor 45 minute workout
             </label>
@@ -135,8 +130,8 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit4 || false}
-                onChange={() => checkBox('habit4')}
+                checked={dateHabitData[3] === 1}
+                onChange={() => checkBox(3)}
               />
               Read 10 pages of a nonfiction book
             </label>
@@ -144,8 +139,8 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit5 || false}
-                onChange={() => checkBox('habit5')}
+                checked={dateHabitData[4] === 1}
+                onChange={() => checkBox(4)}
               />
               Vegan
             </label>
@@ -153,8 +148,8 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit6 || false}
-                onChange={() => checkBox('habit6')}
+                checked={dateHabitData[5] === 1}
+                onChange={() => checkBox(5)}
               />
               No going out to eat (unless with a friend)
             </label>
@@ -162,8 +157,8 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
               <input
                 className = "checkbox"
                 type="checkbox"
-                checked={dateHabitData.habit7 || false}
-                onChange={() => checkBox('habit7')}
+                checked={dateHabitData[6] === 1}
+                onChange={() => checkBox(6)}
               />
              Drink a gallon of water
             </label>

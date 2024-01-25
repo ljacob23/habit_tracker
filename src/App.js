@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Modal from './Modal';
 
@@ -18,6 +18,10 @@ function App() {
         0
     ).getDate();
 
+    const getFormattedDate = (date) => {
+      return date && date.toISOString().split('T')[0];
+    };
+    
     //the date stays the same here
     const nextMonth = () => {
         setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
@@ -37,27 +41,49 @@ function App() {
       return true;
     }
 
-    const handleDayClick = (dayNumber) => {
-      const clickedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
-      
-      setSelectedDate(clickedDate);
-      setModalOpen(true);
-    };
-
+    //making the calendar start on sunday
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-
-    //using 0 because that is the index of sunday
     const columnOffset = firstDay - 0;
-
     const skipDays = Array.from({ length: columnOffset }, (_, index) => (
       <div key = {`empty-${index}`} className = "empty-day"></div>
     ));
+
+    const handleDayClick = (dayNumber) => {
+      const clickedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
+      setSelectedDate(clickedDate);
+      setModalOpen(true);
+    };
+    
+    useEffect(() => {
+      console.log(selectedDate);
+    }, [selectedDate]);
 
     const closeModal = () => {
       setSelectedDate(null);
       setModalOpen(false);
     };
+    const checkBox = (habitIndex) => {
+      setHabitData((prevData) => {
+        const dateISO = getFormattedDate(selectedDate);
+        const currentData = prevData[dateISO] || [];
+        const updatedData = [...currentData];
+        updatedData[habitIndex] = updatedData[habitIndex] ? 0 : 1;
+    
+        return {
+          ...prevData,
+          [dateISO]: updatedData,
+        };
+      });
+    };
 
+    const updateHabitData = (dateISO, updatedData) => {
+      setHabitData((prevData) => ({
+        ...prevData,
+        [dateISO]: updatedData,
+      }));
+    };
+
+    
     //return statement with html
     return (
       <html lang="en">
@@ -78,13 +104,6 @@ function App() {
                     <button className = "arrows" onClick={nextMonth}>&gt;</button>
                 </div>
             <div className="calendar">
-              {/* <div className="daysOfWeek">
-                {weekdays.map(day => (
-                  <div key={day} className="dayOfWeek">
-                    {day}
-                  </div>
-                ))}
-              </div> */}
                 <div className="days">
                   {skipDays}
                   {Array.from({ length: daysInMonth }, (_, index) => {
@@ -111,8 +130,9 @@ function App() {
               isOpen={modalOpen}
               onClose={closeModal}
               date={selectedDate}
-              habitData={habitData}
+              habitData={habitData[getFormattedDate(selectedDate)] || []}
               setHabitData={setHabitData}
+              checkBox={(habitIndex) => checkBox(selectedDate.getDate() - 1, habitIndex)}
             />
         </div>
         </html>
