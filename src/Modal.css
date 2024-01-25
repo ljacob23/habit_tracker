@@ -80,15 +80,6 @@ body, html {
     font-size: 1.5rem;
 }
 
-.individual:hover {
-    background-color: lightgray;
-    color:white;
-}
-
-.individual:hover .date {
-    color: white;
-}
-
 .backButton{
     color: darkgrey;
     background-color: white;

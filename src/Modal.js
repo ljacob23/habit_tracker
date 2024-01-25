@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import './Modal.css';
 
 
-//CREATE NEW MODAL THAT DOES NOTHING EXCEPT CALL THIS MODAL BACK
-//I'M A GENIUS
 const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
