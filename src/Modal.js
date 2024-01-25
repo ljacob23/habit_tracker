@@ -1,30 +1,37 @@
 import React, {useState, useEffect} from 'react';
 import './Modal.css';
 
-
-const Modal = ({ isOpen, onClose, date, habitData, setHabitData, checkBox}) => {
+//I figured out the personal arrays for each date. Now I just have to figure out the useEffect to regenerat the Modal Page
+const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
     const [modalContent, setModalContent] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(date);
-    
-    // useEffect(() => {
-    //     const generateModalContent = () => {
-    //         const content = (
-    //             <div>
-    //                 <p>Selected Date: {selectedDate && selectedDate.toDateString()}</p>
-    //                 <p>Habit Data: {JSON.stringify(habitData)}</p> 
-    //             </div>
-    //         );
-    //         setModalContent(content);
-    //     };
-    //     generateModalContent();
-    // }, [selectedDate, habitData]);
+    const [habitDataForDate, setHabitDataForDate] = useState([]);
+
+
+    useEffect(() => {
+        setHabitDataForDate( selectedDate ? habitData[selectedDate.toISOString()] || [] : []);
+        console.log(selectedDate);
+        setModalOpen(true);
+      }, [selectedDate, habitData]);
 
     if(!isOpen){
         return null;
     };
 
-    
+    const checkBox = (habitIndex) => {
+        setHabitData((prevData) => {
+          const dateISO = date ? date.toISOString() : null
+          const currentData = prevData[dateISO];
+          const updatedData = [...currentData];
+          updatedData[habitIndex] = updatedData[habitIndex] ? 0 : 1;
+      
+          return {
+            ...prevData,
+            [dateISO]: updatedData,
+          };
+        });
+      };
 
 
     const dateHabitData = habitData;
@@ -102,7 +109,11 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData, checkBox}) => {
                 className = "checkbox"
                 type="checkbox"
                 checked={dateHabitData[0] === 1}
-                onChange={() => checkBox(0)}
+            
+                
+                onChange={() => {
+                    checkBox(0)
+                    console.log(dateHabitData[0]===1)}}
               />
               No Alcohol
             </label>
@@ -113,6 +124,7 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData, checkBox}) => {
                 checked={dateHabitData[1] === 1}
                 onChange={() => {
                     console.log(dateHabitData)
+                    console.log(habitData)
                     checkBox(1)}}
               />
               Indoor 45 minute workout

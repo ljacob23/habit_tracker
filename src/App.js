@@ -17,10 +17,6 @@ function App() {
         currentDate.getMonth() + 1,
         0
     ).getDate();
-
-    const getFormattedDate = (date) => {
-      return date && date.toISOString().split('T')[0];
-    };
     
     //the date stays the same here
     const nextMonth = () => {
@@ -50,10 +46,24 @@ function App() {
 
     const handleDayClick = (dayNumber) => {
       const clickedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), dayNumber);
+      setHabitDataHandler(clickedDate);
       setSelectedDate(clickedDate);
       setModalOpen(true);
     };
     
+    const setHabitDataHandler = (date) => {
+      const ISO_date = date ? date.toISOString() : null
+      const hasBeenClickedBefore = date.hasOwnProperty(ISO_date);
+      const defaultValue = Array.from({ length: 7 }, () => 0);
+      const value = hasBeenClickedBefore ? date[ISO_date] : defaultValue;
+      
+      setHabitData((prevHabitData) => ({
+        ...prevHabitData,
+        [ISO_date]: value,
+      }));
+      // console.log(habitData);
+    };
+
     useEffect(() => {
       console.log(selectedDate);
     }, [selectedDate]);
@@ -62,26 +72,7 @@ function App() {
       setSelectedDate(null);
       setModalOpen(false);
     };
-    const checkBox = (habitIndex) => {
-      setHabitData((prevData) => {
-        const dateISO = getFormattedDate(selectedDate);
-        const currentData = prevData[dateISO] || [];
-        const updatedData = [...currentData];
-        updatedData[habitIndex] = updatedData[habitIndex] ? 0 : 1;
     
-        return {
-          ...prevData,
-          [dateISO]: updatedData,
-        };
-      });
-    };
-
-    const updateHabitData = (dateISO, updatedData) => {
-      setHabitData((prevData) => ({
-        ...prevData,
-        [dateISO]: updatedData,
-      }));
-    };
 
     
     //return statement with html
@@ -130,9 +121,8 @@ function App() {
               isOpen={modalOpen}
               onClose={closeModal}
               date={selectedDate}
-              habitData={habitData[getFormattedDate(selectedDate)] || []}
+              habitData={habitData[selectedDate ? selectedDate.toISOString() : null] || []}
               setHabitData={setHabitData}
-              checkBox={(habitIndex) => checkBox(selectedDate.getDate() - 1, habitIndex)}
             />
         </div>
         </html>
