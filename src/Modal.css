@@ -1,0 +1,100 @@
+.modal-overlay{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: fixed;
+    display: flex;
+}
+h2 {
+    margin-left: 20px;
+}
+.modal-overlay .day{
+    border-top: none;
+}
+.modal{
+    width: 100%;
+    height: 100%;
+}
+body, html {
+    margin: 0;
+    padding: 0;
+}
+.habits{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 85%;
+}
+.task {
+    width: 90%;
+    height: 50px;
+    background-color: white;
+    margin: 2%;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px lightgray;
+    display: flex;
+    align-items: center;
+}
+.checkbox{
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid green;
+    border-radius: 50%;
+    outline: none;
+    margin: 2%;
+}
+
+.checkbox:checked {
+    background-color: green;
+    border-color: green;
+}
+
+.week-header{
+    width: 95%;
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    margin-left: 2.5%;
+    
+}
+.modal-days .day {
+    border-top: none; 
+}
+.individual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 95px;
+    width: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8%;
+}
+
+.dayOfWeek{
+    margin-bottom: -0px;
+}
+.date{
+    margin-top: -2px;
+    color: darkgrey;
+    font-size: 1.5rem;
+}
+
+.backButton{
+    color: darkgrey;
+    background-color: white;
+    border: none;
+    font-size: 1.3rem;
+}
+
+.selected-day{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 95px;
+    width: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8%;
+    background-color: lightgray;
+    color: white;
+}
