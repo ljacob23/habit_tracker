@@ -50,7 +50,7 @@ function App() {
     const columnOffset = firstDay - 0;
 
     const skipDays = Array.from({ length: columnOffset }, (_, index) => (
-      <div key = {`empty-${index}`} ></div>
+      <div key = {`empty-${index}`} className = "empty-day"></div>
     ));
 
     const closeModal = () => {

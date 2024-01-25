@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import './Modal.css';
 
-const Modal = ({ isOpen, onClose, date, habitData, setHabitData }) => {
 
+//CREATE NEW MODAL THAT DOES NOTHING EXCEPT CALL THIS MODAL BACK
+//I'M A GENIUS
+const Modal = ({ isOpen, onClose, date, habitData, setHabitData}) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const checkBox = (habit) => {
         setHabitData((prevData) => {
-            const dateISO = date.toISOString();
+            const dateISO = date ? date.toISOString() : '';
             const currentData = prevData[dateISO] || {};
             const updatedData = {
                 ...prevData,
@@ -41,10 +43,24 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData }) => {
         return week;
     }; 
 
-    const handleDayClick = (clickedDate) => {
-        setSelectedDate(clickedDate);
-        setModalOpen(true);
-    };
+    // const handleDayClick = (clickedDate) => {
+    //     setSelectedDate(clickedDate);
+    //     setModalOpen(true);
+    // };
+
+    const openNewModal = () => {
+        // Open a new modal with the selected date
+        setSelectedDate(null);
+      };
+    const handleDayClick = (dayNumber) => {
+        openNewModal();
+        const clickedDate = new Date(dayNumber.getFullYear(), dayNumber.getMonth(), dayNumber.getDate());
+        console.log(clickedDate);
+
+        // setSelectedDate(clickedDate);
+       setSelectedDate(clickedDate);
+       
+      };
 
     const closeModal = ()  => {
         onClose();
