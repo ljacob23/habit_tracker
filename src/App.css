@@ -48,6 +48,12 @@
   border: white 10px;
 }
 
+.true{
+  color: green;
+}
+.false{
+  color:yellow;
+}
 .current-day {
   position: relative;
 }

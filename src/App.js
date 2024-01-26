@@ -8,7 +8,9 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+  const [boolean, setBoolean] = useState(false);
+  // let boolean;
+  
     //get the year
     //then increase to the next month
     //date is the next month's first day -1 (the day before the first day of next month)
@@ -17,6 +19,14 @@ function App() {
         currentDate.getMonth() + 1,
         0
     ).getDate();
+
+    //creates a callback function for the greendot
+    const completed = (complete) => {
+      console.log(complete);
+      setBoolean(complete);
+      console.log(boolean);
+      
+    };
 
     //the date stays the same here
     const nextMonth = () => {
@@ -58,6 +68,7 @@ function App() {
       setModalOpen(false);
     };
 
+    
     //return statement with html
     return (
       <html lang="en">
@@ -78,13 +89,6 @@ function App() {
                     <button className = "arrows" onClick={nextMonth}>&gt;</button>
                 </div>
             <div className="calendar">
-              {/* <div className="daysOfWeek">
-                {weekdays.map(day => (
-                  <div key={day} className="dayOfWeek">
-                    {day}
-                  </div>
-                ))}
-              </div> */}
                 <div className="days">
                   {skipDays}
                   {Array.from({ length: daysInMonth }, (_, index) => {
@@ -97,13 +101,16 @@ function App() {
                       <div key={dayNumber} 
                       className={`day ${sameDay ? 'current-day' : ''}`}
                       onClick={() => handleDayClick(dayNumber)}>
+                       
+                        
                         {dayNumber}
-
+                        
                       <div className = "circle"></div>
                       <div className = "date"></div>
                       </div>
                     )
                   }
+                  
                   )}
                 </div>
             </div>
@@ -113,6 +120,7 @@ function App() {
               date={selectedDate}
               habitData={habitData}
               setHabitData={setHabitData}
+              completed={completed}
             />
         </div>
         </html>
