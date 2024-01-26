@@ -8,7 +8,7 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const [boolean, setBoolean] = useState(false);
+  const [completeArray, setCompleteArray] = useState(false);
   // let boolean;
   
     //get the year
@@ -22,9 +22,8 @@ function App() {
 
     //creates a callback function for the greendot
     const completed = (complete) => {
-      console.log(complete);
-      setBoolean(complete);
-      console.log(boolean);
+      setCompleteArray(complete);
+      console.log(completeArray);
       
     };
 
@@ -94,6 +93,7 @@ function App() {
                   {Array.from({ length: daysInMonth }, (_, index) => {
                     //index is the day in the month but zero-indexed so add 1
                     const dayNumber = index + 1;
+                    const habitDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), index + 1).toISOString();
                     const sameDay = isSameDay(new Date(), new Date(currentDate.getFullYear(), currentDate.getMonth(), index + 1));
 
                     return(
@@ -105,7 +105,7 @@ function App() {
                         
                         {dayNumber}
                         
-                      <div className = "circle"></div>
+                      <div className = {`true ${completeArray[habitDate] ? '' : 'false'}`}></div>
                       <div className = "date"></div>
                       </div>
                     )

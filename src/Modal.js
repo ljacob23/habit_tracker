@@ -5,6 +5,9 @@ import './Modal.css';
 const Modal = ({ isOpen, onClose, date, habitData, setHabitData, completed}) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [habitsArray, setHabitsArray] = useState([]);
+   
+
     const checkBox = (habit) => {
         setHabitData((prevData) => {
             const dateISO = date ? date.toISOString() : '';
@@ -24,11 +27,27 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData, completed}) => 
     if(!isOpen){
         return null;
     }
+    const dateISO = date.toISOString();
+
+    // const checker = () => {
+    //   const complete = (dateHabitData.habit1 && dateHabitData.habit2 && dateHabitData.habit3 && dateHabitData.habit4 && dateHabitData.habit5 && dateHabitData.habit6 && dateHabitData.habit7 || false);
+    //   const entry = {[dateISO]: complete};
+    //   console.log(complete);
+    //   setHabitsArray((prevArray) => {
+    //     const newArray = [...prevArray, entry];
+    //     completed(newArray);
+    //     console.log(entry);
+    //     return newArray;
+    //   });
+    //   closeModal();
+    // };
 
     //create this variable so the dataCheck can read the date
-    const dateISO = date.toISOString();
+  
     //this will default to an empty object if dateISO is undefined
     const dateHabitData = habitData[dateISO] || {}; 
+
+
 
 
     const getCurrentWeek = () => {
@@ -41,23 +60,18 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData, completed}) => 
         return week;
     }; 
 
-    // const handleDayClick = (dayNumber) => {
-
-    //     const clickedDate = new Date(dayNumber.getFullYear(), dayNumber.getMonth(), dayNumber.getDate());
-    //     console.log(clickedDate);
-
-    //    setSelectedDate(clickedDate);
-       
-    //   };
-
     const closeModal = ()  => {
         onClose();
     };
     
-
-    const checker = () => {
+    
+    const checker2 = () => {
       const complete = (dateHabitData.habit1 && dateHabitData.habit2 && dateHabitData.habit3 && dateHabitData.habit4 && dateHabitData.habit5 && dateHabitData.habit6 && dateHabitData.habit7 || false);
-      completed(complete);
+      const entry = {[dateISO]: complete};
+      // console.log(entry);
+      setHabitsArray((prevArray) => [...prevArray, entry]);
+      // console.log(habitsArray);
+      completed(habitsArray);
       closeModal();
     };
 
@@ -84,7 +98,7 @@ const Modal = ({ isOpen, onClose, date, habitData, setHabitData, completed}) => 
     return (
         <div className="modal-overlay">
           <div className="modal">
-            <button onClick={checker} className = "backButton">&laquo;</button>
+            <button onClick={checker2} className = "backButton">&laquo;</button>
 
                 <h2>
                     {date.toLocaleString('default', { month: 'short' })}{' '}
