@@ -69,6 +69,7 @@ function App() {
 
     
     //return statement with html
+    
     return (
       <html lang="en">
       <head>
@@ -105,8 +106,8 @@ function App() {
                         
                         {dayNumber}
                         
-                      <div className = {`true ${completeArray[habitDate] ? '' : 'false'}`}></div>
-                      <div className = "date"></div>
+                      <div className = {` ${completeArray[habitDate] ? 'false' : 'true'}`}>h</div>
+       
                       </div>
                     )
                   }
@@ -124,7 +125,8 @@ function App() {
             />
         </div>
         </html>
-    )
+    );
 
-  }
+  
+}
 export default App;
